@@ -113,3 +113,163 @@ WHERE
     AND TRY_TO_DATE(check_out_date) >= TRY_TO_DATE(check_in_date); -- Logical date range
 
 SELECT * FROM HOTEL_BOOKINGS_SILVER LIMIT 20;
+
+-------------------------------------------------
+-- GOLD LAYER
+-------------------------------------------------
+
+-- daily bookings and revenue aggregated by check-in date
+CREATE TABLE GOLD_AGG_DAILY_BOOKING AS
+SELECT
+    check_in_date AS date,
+    COUNT(*) AS total_booking,
+    SUM(total_amount) AS total_revenue
+FROM HOTEL_BOOKINGS_SILVER
+GROUP BY check_in_date
+ORDER BY date;
+
+-- total revenue aggregated by hotel city
+CREATE TABLE GOLD_AGG_HOTEL_CITY_SALES AS
+SELECT
+    hotel_city,
+    SUM(total_amount) AS total_revenue
+FROM HOTEL_BOOKINGS_SILVER
+GROUP BY hotel_city
+ORDER BY total_revenue DESC;
+
+-- bookings and revenue by booking status
+CREATE TABLE GOLD_AGG_BOOKING_STATUS AS
+SELECT
+  booking_status,
+  COUNT(*) AS total_bookings,
+  SUM(total_amount) AS total_revenue
+FROM HOTEL_BOOKINGS_SILVER
+GROUP BY booking_status
+ORDER BY total_revenue DESC;
+
+-- room-type performance (bookings, revenue, average ticket)
+CREATE TABLE GOLD_AGG_ROOM_TYPE_PERFORMANCE AS
+SELECT
+  room_type,
+  COUNT(*) AS total_bookings,
+  SUM(total_amount) AS total_revenue,
+  AVG(total_amount) AS avg_amount
+FROM HOTEL_BOOKINGS_SILVER
+GROUP BY room_type
+ORDER BY total_revenue DESC;
+
+-- city KPIs with currency safety (bookings, revenue, stay nights, ADR)
+CREATE TABLE GOLD_AGG_CITY_KPIS AS
+SELECT
+  hotel_city,
+  currency,
+  COUNT(*) AS total_bookings,
+  SUM(total_amount) AS total_revenue,
+  SUM(DATEDIFF('day', check_in_date, check_out_date)) AS total_stay_nights,
+  ROUND(
+    SUM(total_amount) / NULLIF(SUM(DATEDIFF('day', check_in_date, check_out_date)), 0),
+    2
+  ) AS adr
+FROM HOTEL_BOOKINGS_SILVER
+GROUP BY hotel_city, currency
+ORDER BY total_revenue DESC;
+
+-- hotel-level performance (bookings, revenue, stay nights, ADR)
+CREATE TABLE GOLD_AGG_HOTEL_PERFORMANCE AS
+SELECT
+  hotel_id,
+  hotel_city,
+  currency,
+  COUNT(*) AS total_bookings,
+  SUM(total_amount) AS total_revenue,
+  SUM(DATEDIFF('day', check_in_date, check_out_date)) AS total_stay_nights,
+  ROUND(
+    SUM(total_amount) / NULLIF(SUM(DATEDIFF('day', check_in_date, check_out_date)), 0),
+    2
+  ) AS adr
+FROM HOTEL_BOOKINGS_SILVER
+GROUP BY hotel_id, hotel_city, currency
+ORDER BY total_revenue DESC;
+
+-- top customers by revenue and bookings
+CREATE TABLE GOLD_AGG_CUSTOMER_VALUE AS
+SELECT
+  customer_id,
+  INITCAP(customer_name) AS customer_name,
+  COUNT(*) AS total_bookings,
+  SUM(total_amount) AS total_revenue,
+  MIN(check_in_date) AS first_stay,
+  MAX(check_out_date) AS last_stay
+FROM HOTEL_BOOKINGS_SILVER
+GROUP BY customer_id, customer_name
+ORDER BY total_revenue DESC;
+
+-- stay-length distribution buckets (nights)
+CREATE TABLE GOLD_AGG_STAY_LENGTH_BUCKETS AS
+WITH stays AS (
+  SELECT
+    booking_id,
+    DATEDIFF('day', check_in_date, check_out_date) AS nights
+  FROM HOTEL_BOOKINGS_SILVER
+)
+SELECT
+  CASE
+    WHEN nights IS NULL OR nights <= 0 THEN '0 or invalid'
+    WHEN nights BETWEEN 1 AND 2 THEN '1-2'
+    WHEN nights BETWEEN 3 AND 5 THEN '3-5'
+    WHEN nights BETWEEN 6 AND 10 THEN '6-10'
+    ELSE '11+'
+  END AS stay_length_bucket,
+  COUNT(*) AS bookings
+FROM stays
+GROUP BY stay_length_bucket
+ORDER BY bookings DESC;
+
+SELECT * FROM GOLD_AGG_DAILY_BOOKING LIMIT 10;
+
+SELECT * FROM GOLD_AGG_HOTEL_CITY_SALES LIMIT 10;
+
+SELECT * FROM GOLD_AGG_BOOKING_STATUS LIMIT 10;
+
+SELECT * FROM GOLD_AGG_ROOM_TYPE_PERFORMANCE LIMIT 10;
+
+SELECT * FROM GOLD_AGG_CITY_KPIS LIMIT 10;
+
+SELECT * FROM GOLD_AGG_HOTEL_PERFORMANCE LIMIT 10;
+
+SELECT * FROM GOLD_AGG_CUSTOMER_VALUE LIMIT 10;
+
+SELECT * FROM GOLD_AGG_STAY_LENGTH_BUCKETS LIMIT 10;
+
+
+-- Gold table: clean, business-ready hotel bookings fact table
+-- Provides standardized schema for dashboards and KPI calculations
+CREATE TABLE HOTEL_BOOKINGS_GOLD AS
+SELECT
+    booking_id,
+    hotel_id,
+    INITCAP(hotel_city) AS hotel_city,          -- standardized city names
+    customer_id,
+    INITCAP(customer_name) AS customer_name,    -- proper case names
+    LOWER(customer_email) AS customer_email,    -- normalized emails
+    check_in_date,
+    check_out_date,
+    room_type,
+    num_guests,
+    ROUND(total_amount, 2) AS total_amount,     -- rounded numeric amounts
+    currency,
+    CASE                                         -- normalized booking status
+        WHEN LOWER(booking_status) IN ('confirmed','confirmeeed','confirmd') THEN 'Confirmed'
+        WHEN LOWER(booking_status) = 'cancelled' THEN 'Cancelled'
+        WHEN LOWER(booking_status) = 'no-show'   THEN 'No-Show'
+        ELSE INITCAP(booking_status)
+    END AS booking_status,
+    DATEDIFF('day', check_in_date, check_out_date) AS stay_nights -- derived metric
+FROM HOTEL_BOOKINGS_SILVER
+WHERE
+    check_in_date IS NOT NULL
+    AND check_out_date IS NOT NULL
+    AND check_out_date >= check_in_date;
+
+
+SELECT * FROM HOTEL_BOOKINGS_GOLD LIMIT 10;
