@@ -82,10 +82,10 @@ Gold (Analytics-Ready)
 ## 📊 Dashboard Visualizations
 
 ### 1. Revenue Overview Dashboard
-![Revenue Dashboard](![Screenshot_11-12-2025_12122_app snowflake com](https://github.com/user-attachments/assets/bb63c59e-06ff-48e6-ae91-1964596eb703))
+![Screenshot_11-12-2025_12122_app snowflake com](https://github.com/user-attachments/assets/bb63c59e-06ff-48e6-ae91-1964596eb703)
 
 ### 2. City Performance Analytics
-![City Analytics](![Screenshot_11-12-2025_121219_app snowflake com](https://github.com/user-attachments/assets/bd24f1d3-dc20-40be-9c96-5547275ec539))
+![Screenshot_11-12-2025_121219_app snowflake com](https://github.com/user-attachments/assets/bd24f1d3-dc20-40be-9c96-5547275ec539)
 
 ### 3.
 ![Screenshot_11-12-2025_121231_app snowflake com](https://github.com/user-attachments/assets/120587e6-fb00-4880-811e-6375d0a9f370)
