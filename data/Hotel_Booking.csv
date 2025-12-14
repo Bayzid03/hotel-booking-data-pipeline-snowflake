@@ -1,0 +1,21 @@
+BOOKING_ID,HOTEL_ID,HOTEL_CITY,CUSTOMER_ID,CUSTOMER_NAME,CUSTOMER_EMAIL,CHECK_IN_DATE,CHECK_OUT_DATE,ROOM_TYPE,NUM_GUESTS,TOTAL_AMOUNT,CURRENCY,BOOKING_STATUS
+bc3c2ecb-89b3-4f87-9714-355c5088b35d,1860,Michelleport,1d541501-4a4a-479e-9d6c-91f80cf8452e,Tracy Ortega,,2026-01-11,2026-01-19,Deluxe,4,252,USD,Confirmed
+6834f794-1cee-41fe-ba24-d54368d6865e,1058,North Tina,11e3742c-0326-473e-964c-db5ab6de07f2,Karen Coleman,,2025-10-16,2025-10-20,Suite,2,150,INR,Confirmed
+e8f146a0-faf2-4c69-9a2b-ce6593d10950,1638,New Frederickville,7abf382a-89b8-4ed5-b5db-fe8c9b66f979,Anthony Alvarez,,2026-02-06,2026-02-12,Standard,5,197,USD,No-Show
+83bd8eab-d136-4153-bb30-4d0367b1e106,1980,Port Wesley,917c92b9-9ef1-46fc-9098-db84612c8856,Russell Williams,,2025-11-11,2025-11-17,Deluxe,2,464,EUR,No-Show
+c9a791c0-1f34-4c18-b1e6-f1c85ab916c4,1739,North Stevehaven,17485b29-a80e-41a4-8d3a-e783350006f7,Natalie Green,robert19@example.org,2025-02-19,2025-02-27,Standard,2,507,EUR,Confirmed
+fadd2f9a-ee13-4e4a-98bf-a685669a40d0,1923,Cliffordbury,451192ab-3d5c-480a-b702-ded5aafcbdaa,Jean Chan,tonyaellison@example.com,2025-05-28,2025-06-02,Standard,2,504,INR,Confirmed
+0e62ae16-3c2c-4eb9-ba55-89e6f8e4f3dc,1136,Martintown,707d69f1-a8d5-4665-a092-68fa6b5c64c8,Aaron Young,michael60@example.net,2025-03-11,2025-03-19,Deluxe,1,176,USD,Confirmed
+3ac87823-3996-49b9-bde7-b9c30ab9cc44,1299,Johnsonland,0567969e-3d96-40f9-9f28-54a917f9c7c6,Yvette Butler,,2026-05-23,2026-05-26,Suite,4,470,INR,Confirmed
+c04fd7c4-6cba-4402-8c3f-fa9e82c54b3d,1348,West Jenniferborough,aad9ddf8-6514-41ed-bcae-d4de96982a40,David Hall,salastina@example.com,2026-01-30,2026-02-07,Deluxe,2,507,USD,Cancelled
+89c4d14c-a632-4d64-95ca-8a1f44f7ed96,1564,South Grant,983b9421-baa4-4ad1-8a63-11b5d03b6a10,Sarah Johnson,swoods@example.com,2026-05-21,2026-05-25,Suite,3,356,INR,Confirmed
+b988fdfe-30d3-4d54-a1f4-a847e7ff2191,1498,East Rogerland,cafc099a-cef4-4b6f-a211-cdf7881a4d6f,Robert Lewis,christinearnold@example.com,2025-10-05,2025-10-13,Standard,5,444,EUR,No-Show
+df213ba4-102f-46fc-bbbc-f0ac092f2609,1621,Port Matthew,0e860d04-f175-4cef-9597-c6116564f033,Earl Wilkins,,2025-01-29,2025-02-02,Standard,2,275,USD,Cancelled
+7c486597-8ebf-46b9-9d06-4e9c34463fca,1878,North Rebecca,ab82b757-acd0-4386-942f-9f7a117e9c9f,Cheryl Flores,mooreemma@example.net,2025-03-30,2025-04-09,Standard,3,430,USD,Confirmed
+bbcc7cb2-4a7b-41a5-a2eb-11924d16aeeb,1605,Kathrynport,898eaae8-d732-4753-bb4d-87947962ac28,Brandy Mitchell,,2026-05-13,2026-05-17,Deluxe,1,503,EUR,Cancelled
+f5afb150-4561-4f25-8d03-f405068bec85,1998,South Todd,3ad44f66-b8a7-45d5-8796-ea229ee507d9,James Davis,brandi57@example.org,2025-09-08,2025-09-10,Suite,4,471,EUR,No-Show
+6fce7e83-edd9-406c-a0ec-e1bc965156c5,1674,East Tommy,1f2f8f06-87aa-482b-9728-b5be9fdd8e92,Jacqueline Howard,,2025-06-21,2025-07-01,Suite,3,277,INR,Cancelled
+a1e26857-2c5b-4a9c-8442-850e6542d45e,1276,East Michaelport,e078ceff-d59d-4f1d-82f7-ecf1d5aa0f85,Ronald Stewart,robert35@example.org,2025-09-19,2025-09-24,Suite,3,158,INR,No-Show
+c3a62e44-203a-4887-a6d7-953eb70412a2,1662,Martinside,a5974109-8ca9-4cdb-b7ba-6aac0441c5f4,Morgan Blackwell,,2026-02-23,2026-03-02,Standard,2,440,USD,No-Show
+85db9bbd-b01f-4582-b843-cbcb344636e2,1882,Ariasmouth,98332bab-a110-4785-b7cd-c9d231b51eb2,Austin Smith,asolis@example.org,2025-03-22,2025-03-25,Deluxe,1,80,EUR,Cancelled
+5dc2e549-2aca-45d6-ba93-764d34adfe96,1435,Cameronborough,ba796743-857c-4caa-9987-d378237272d5,Susan Collins,edwardnash@example.org,2025-04-17,2025-04-27,Standard,1,206,INR,Cancelled
